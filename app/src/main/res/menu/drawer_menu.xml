@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:title="Menu">
+
+        <menu>
+            <item
+                android:id="@+id/home"
+                android:icon="@drawable/ic_home"
+                android:title="Home"></item>
+            <item
+                android:id="@+id/inventario"
+                android:icon="@drawable/ic_inventario"
+                android:title="Inventario"></item>
+
+            <item
+                android:id="@+id/items"
+                android:icon="@drawable/ic_carrito"
+                android:title="Items"></item>
+
+            <item
+                android:id="@+id/statistics"
+                android:icon="@drawable/ic_estadisticas"
+                android:title="Estadísticas"></item>
+
+            <item
+                android:id="@+id/perfil"
+                android:icon="@drawable/ic_perfil"
+                android:title="Perfil"></item>
+            <item
+                android:id="@+id/foro"
+                android:icon="@drawable/ic_estadisticas"
+                android:title="Foro"></item>
+            <item
+                android:id="@+id/camara"
+                android:icon="@drawable/ic_camera"
+                android:title="Camara"></item>
+        </menu>
+
+    </item>
+
+
+</menu>
