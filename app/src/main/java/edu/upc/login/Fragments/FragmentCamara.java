@@ -98,7 +98,7 @@ public class FragmentCamara extends Fragment {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-        if(hasPermission(Manifest.permission.CAMERA) && hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+        if(hasPermission(permissions[0]) && hasPermission(permissions[1])) {
             // If request is cancelled, the result arrays are empty.
             if ((grantResults.length != 0 && grantResults[0] == getActivity().getPackageManager().PERMISSION_GRANTED)) {
                 // permission was granted
@@ -120,14 +120,14 @@ public class FragmentCamara extends Fragment {
     private boolean checkCameraHardware (Context context) {
         boolean aux;
         aux = (context.getPackageManager().hasSystemFeature(getActivity().getPackageManager().FEATURE_CAMERA_ANY));
-        Log.i("info", "Hay Camara: "+aux);
+        Log.i("INFO", "Hay Camara: "+aux);
         return aux;
     }
 
     private boolean hasPermission (String per) {
         boolean aux2;
         aux2 = (getActivity().getPackageManager().PERMISSION_GRANTED == getActivity().checkSelfPermission(per));
-        Log.i("into", "permiso: "+aux2);
+        Log.i("INFO", "permiso: "+aux2);
         return aux2;
     }
 
