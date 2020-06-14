@@ -55,6 +55,7 @@ public class FragmentCamara extends Fragment {
     String nombreImagen = "";
 
     public boolean canOpenCamera = false;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -103,7 +104,7 @@ public class FragmentCamara extends Fragment {
             if ((grantResults.length != 0 && grantResults[0] == getActivity().getPackageManager().PERMISSION_GRANTED)) {
                 // permission was granted
                 canOpenCamera = true;
-                Log.i("RequestPermission", "Hay permiso: "+canOpenCamera);
+                Log.i("RequestPermission", "Hay permiso: "+ canOpenCamera);
             }
         }
     }
@@ -119,14 +120,14 @@ public class FragmentCamara extends Fragment {
 
     private boolean checkCameraHardware (Context context) {
         boolean aux;
-        aux = (context.getPackageManager().hasSystemFeature(getActivity().getPackageManager().FEATURE_CAMERA_ANY));
+        aux = context.getPackageManager().hasSystemFeature(getActivity().getPackageManager().FEATURE_CAMERA_ANY);
         Log.i("INFO", "Hay Camara: "+aux);
         return aux;
     }
 
     private boolean hasPermission (String per) {
         boolean aux2;
-        aux2 = (getActivity().getPackageManager().PERMISSION_GRANTED == getActivity().checkSelfPermission(per));
+        aux2 = getActivity().getPackageManager().PERMISSION_GRANTED == getActivity().checkSelfPermission(per);
         Log.i("INFO", "permiso: "+aux2);
         return aux2;
     }
@@ -194,7 +195,11 @@ public class FragmentCamara extends Fragment {
             photoFile = createImageFile();
             // Continue only if the File was successfully created
             if (photoFile != null) {
-                Uri photoURI = Uri.fromFile(photoFile);
+                //Uri photoURI = Uri.fromFile(photoFile);
+                Uri photoURI = FileProvider.getUriForFile(
+                        getActivity(),
+                        "edu.upc.login.provider",
+                        photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, COD_FOTO);
             }
