@@ -43,7 +43,7 @@ public class FragmentCamara extends Fragment {
     String path = "";
 
     String pathSDCard = System.getenv("SECONDARY_STORAGE");
-    String[] permissions = {"Manifest.permission.CAMERA", "Manifest.permission.WRITE_EXTERNAL_STORAGE"};
+    String[] permissions = {Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
 
 
     final int COD_SELECCIONA = 10;
@@ -109,6 +109,13 @@ public class FragmentCamara extends Fragment {
         }
     }
 
+    public void EstadoSd (){
+
+        String estado = Environment.getExternalStorageState();
+        Log.i("SD","Estado: "+estado);
+
+    }
+
 
     public static boolean isSDCardAvailable(Context context) {
         File[] storages = ContextCompat.getExternalFilesDirs(context, null);
@@ -152,9 +159,9 @@ public class FragmentCamara extends Fragment {
                        // intent.setType("image/");
                         //startActivityForResult(intent.createChooser(intent, "Selecciona la Aplicacion"), COD_SELECCIONA);
                     } else {
-                        boolean sd = isSDCardAvailable(getContext());
-                        Log.i("SD","Hay SD: "+ sd);
-
+                        //boolean sd = isSDCardAvailable(getContext());
+                        //Log.i("SD","Hay SD: "+ sd);
+                        EstadoSd();
                         dialog.dismiss();
 
                     }
@@ -209,7 +216,7 @@ public class FragmentCamara extends Fragment {
         // Create an image file name
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "JPEG_" + timeStamp + "_";
-        File storageDir = getActivity().getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File storageDir = getActivity().getExternalFilesDir(pathSDCard);
         File image = null;
         try {
             image = File.createTempFile(
