@@ -7,7 +7,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -18,7 +17,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,10 +25,6 @@ import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
 import java.io.File;
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.ExecutionException;
 
 import edu.upc.login.R;
 
@@ -62,7 +56,7 @@ public class FragmentCamara extends Fragment {
         super.onCreate(savedInstanceState);
         View RootView = inflater.inflate(R.layout.camara_fragment, container, false);
         this.RootView = RootView;
-        imagen = RootView.findViewById(R.id.PreviewPhoto);
+        imagen = RootView.findViewById(R.id.Photo);
         cameraBtn = RootView.findViewById(R.id.openCamaraid);
         cameraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -156,11 +150,7 @@ public class FragmentCamara extends Fragment {
                         Intent intent = new Intent(Intent.ACTION_GET_CONTENT, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                         intent.setType("image/");
                         startActivityForResult(intent, COD_SELECCIONA);
-                       // intent.setType("image/");
-                        //startActivityForResult(intent.createChooser(intent, "Selecciona la Aplicacion"), COD_SELECCIONA);
                     } else {
-                        //boolean sd = isSDCardAvailable(getContext());
-                        //Log.i("SD","Hay SD: "+ sd);
                         EstadoSd();
                         dialog.dismiss();
 
@@ -172,27 +162,6 @@ public class FragmentCamara extends Fragment {
     }
 
     private void hacerFoto() {
-        /*
-        String destPath = this.getContext().getExternalFilesDir(null).getAbsolutePath();
-        Log.i("error", "destPath: "+destPath);
-        File fileImagen = new File((destPath));
-        boolean creada = fileImagen.exists();
-        String nombreImagen = "";
-
-        if (creada == false) {
-            creada = fileImagen.mkdir();
-        }
-        if (creada == true) {
-            nombreImagen = (System.currentTimeMillis() / 1000) + ".jpg";
-        }
-
-        path = this.getContext().getExternalFilesDir(null).getAbsolutePath() + File.separator + RUTA_IMAGEN + File.separator + nombreImagen;
-
-        File imagen = new File(path);
-
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(imagen));
-        startActivityForResult(intent, COD_FOTO);*/
 
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         // Ensure that there's a camera activity to handle the intent
@@ -207,15 +176,20 @@ public class FragmentCamara extends Fragment {
                         getActivity(),
                         "edu.upc.login.provider",
                         photoFile);
+                Log.i("Meta", "Media:"+ MediaStore.EXTRA_OUTPUT+" "+photoURI);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, COD_FOTO);
+
+                Bitmap bitmap = BitmapFactory.decodeFile(path);
+                imagen.setImageBitmap(bitmap);
+                Log.i("META","bitmap: "+bitmap);
             }
         }
     }
+
     private File createImageFile() {
         // Create an image file name
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-        String imageFileName = "JPEG_" + timeStamp + "_";
+        String imageFileName = "Avatar";
         File storageDir = getActivity().getExternalFilesDir(pathSDCard);
         File image = null;
         try {
@@ -234,29 +208,26 @@ public class FragmentCamara extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_OK) {
-            switch (requestCode) {
-                case COD_SELECCIONA:
+        Log.i("Meta", "He llegao? "+requestCode+" "+COD_FOTO);
+
+        switch (requestCode) {
+
+            case COD_SELECCIONA:
                     Uri miPath = data.getData();
                     Log.i("Meta", "He llegao?");
                     imagen.setImageURI(miPath);
                     break;
-                case COD_FOTO:
+
+            case COD_FOTO:
+                    /*Log.i("Meta", "Intent: "+data);
                     Bundle extras = data.getExtras();
                     Bitmap imageBitmap = (Bitmap) extras.get("data");
-                    imagen.setImageBitmap(imageBitmap);
-                    //Save to File
-
-                  /*  MediaScannerConnection.scanFile(getContext(), new String[]{path}, null, new MediaScannerConnection.OnScanCompletedListener() {
-                        @Override
-                        public void onScanCompleted(String path, Uri uri) {
-                            Log.i("Ruta de almacenamiento", "Path: " + path);
-                        }
-                    });
-                    Bitmap bitmap = BitmapFactory.decodeFile(path);
-                    imagen.setImageBitmap(bitmap);*/
+                    Log.i("Meta", "He llegao: "+ imageBitmap);
+                    String dest = this.getActivity().getExternalFilesDir(null).toString();
+                    Log.i("Meta", "dest: "+dest);
+                    imagen.setImageBitmap(imageBitmap);*/
                     break;
             }
-        }
+
     }
 }

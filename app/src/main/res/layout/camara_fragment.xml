@@ -6,17 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/PreviewPhoto"
-        android:layout_width="162dp"
-        android:layout_height="198dp"
-        android:cropToPadding="false"
-        android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <TextView
         android:id="@+id/textCamara"
         android:layout_width="wrap_content"
@@ -24,11 +13,10 @@
         android:background="@android:color/holo_green_dark"
         android:text="Camara"
         android:textSize="24sp"
-        app:layout_constraintBottom_toTopOf="@+id/PreviewPhoto"
+        app:layout_constraintBottom_toTopOf="@+id/Photo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.44" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/openCamaraid"
@@ -39,6 +27,18 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PreviewPhoto" />
+        app:layout_constraintTop_toBottomOf="@+id/Photo" />
+
+    <ImageView
+        android:id="@+id/Photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@tools:sample/avatars" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
